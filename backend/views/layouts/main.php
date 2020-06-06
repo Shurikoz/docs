@@ -45,9 +45,11 @@ $user =  Yii::$app->user->can('user');
     ];
     $menuItems[] = [
         'label' => 'Пользователи',
-        'url' => ['/admin/user/index'],
         'visible' => $admin,
-
+        'items' => [
+            ['label' => 'Настройка пользователей', 'url' => '/admin/user/index'],
+            ['label' => 'Регистрация пользователя', 'url' => '/admin/user/signup'],
+        ],
     ];
     $menuItems[] = [
         'label' => 'Документы',
