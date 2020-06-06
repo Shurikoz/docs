@@ -11,6 +11,10 @@ use yii\widgets\Breadcrumbs;
 use common\widgets\Alert;
 
 AppAsset::register($this);
+
+$admin = Yii::$app->user->can('admin');
+$user =  Yii::$app->user->can('user');
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -35,16 +39,28 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-    $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
+    $menuItems[] = [
+        'label' => 'Главная',
+        'url' => ['/index']
+    ];
+    $menuItems[] = [
+        'label' => 'Пользователи',
+        'url' => ['/admin/user/index'],
+        'visible' => $admin,
+
+    ];
+    $menuItems[] = [
+        'label' => 'Документы',
+        'url' => ['/docs'],
+        'visible' => $admin || $user,
     ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+        $menuItems[] = ['label' => 'Вход', 'url' => ['/site/login']];
     } else {
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
+                'Выход (' . Yii::$app->user->identity->username . ')',
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()
