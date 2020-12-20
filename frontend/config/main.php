@@ -8,13 +8,27 @@ $params = array_merge(
 
 return [
     'id' => 'app-frontend',
+    'language' => 'ru-RU',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
+    'modules' => [
+
+        //модуль вывода новостей
+        'news' => [
+            'class' => 'frontend\modules\news\news',
+        ],
+        //CRUD модуль новостей
+        'admin' => [
+            'class' => 'frontend\modules\admin\news',
+        ],
+
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',
         ],
+
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
